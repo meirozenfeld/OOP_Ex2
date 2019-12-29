@@ -1,7 +1,7 @@
 package dataStructure;
-
 import java.util.Collection;
 import java.util.Hashtable;
+
 
 public class DGraph implements graph{
 	private Hashtable  <Integer, node_data> Nodes;
@@ -46,7 +46,6 @@ public class DGraph implements graph{
 
 	@Override
 	public Collection<node_data> getV() {
-
 		return this.Nodes.values();
 	}
 
@@ -98,7 +97,7 @@ public class DGraph implements graph{
 		String ans="";
 
 		for(Integer key: this.Nodes.keySet()){
-			ans+="            "+key+": "+ this.Edges.get(this.Nodes.get(key)).toString();
+			ans+="      "+key+": "+ this.Edges.get(this.Nodes.get(key)).toString();
 			
 		}
 		return ans;

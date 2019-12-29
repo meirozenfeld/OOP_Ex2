@@ -13,11 +13,11 @@ public class NodeData implements node_data {
 	private int tag;
 
 	public NodeData() {
-		this.key=-1;
+		this.key=0;
 		this.weight=Double.POSITIVE_INFINITY;
 		this.location=new Point3D(0, 0, 0);
-		this.info=null;
-		this.tag=-1;
+		this.info="";
+		this.tag=0;
 		
 
 	}

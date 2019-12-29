@@ -11,7 +11,7 @@ public class EdgeData implements edge_data {
 		this.src=-1;
 		this.dest=-1;
 		this.weight=-1;
-		this.info=null;
+		this.info="";
 		this.tag=-1;
 	}
 
@@ -70,8 +70,8 @@ public class EdgeData implements edge_data {
 
 	}
 //public String tostring () {
-//	String ans=String.valueOf(dest);
-//	return ans ;
+//	
+//	return ""+this.dest+this.weight ;
 //	
 //}
 }
