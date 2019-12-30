@@ -1,5 +1,11 @@
 package algorithms;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -28,12 +34,9 @@ public class Graph_Algo implements graph_algorithms{
 	@Override
 	public void init(graph g) {
 		this.gr=g;
-
-
 	}
 
-	public void clearG()
-	{
+	public void clearG(){
 		for(node_data v: gr.getV())
 		{
 			v.setInfo(Double.toString(v.getWeight()));//save the original weight
@@ -44,14 +47,30 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public void init(String file_name) {
-		// TODO Auto-generated method stub
+		try {
+			FileInputStream file = new FileInputStream(new File(file_name));
+			ObjectInputStream obj = new ObjectInputStream(file);
+			Graph_Algo g =  (Graph_Algo) obj.readObject();
+			this.gr =g.gr;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (RuntimeException | IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	@Override
 	public void save(String file_name) {
-		// TODO Auto-generated method stub
-
+		try {
+			FileOutputStream file = new FileOutputStream(new File(file_name));
+			ObjectOutputStream obj = new ObjectOutputStream(file);
+			obj.writeObject(this);
+			obj.close();
+			file.close();
+		} catch (RuntimeException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -76,7 +95,6 @@ public class Graph_Algo implements graph_algorithms{
 				if(gr.getNode(e.getDest()).getTag()==0)
 				{
 					F.add(gr.getNode(e.getDest()));
-
 				}
 			}
 		}
@@ -90,7 +108,7 @@ public class Graph_Algo implements graph_algorithms{
 		gr.getNode(src).setWeight(0);// reset start node to zero (minimum)
 		while(!visited(this.gr))
 		{
-			node_data min=gr.getNode(minW(this.gr,src)); // save the min weight node
+			node_data min=minW(this.gr,src); // save the min weight node
 			min.setTag(1);//visited
 			Collection<edge_data> ne=gr.getE(min.getKey()); // neighbors of min node
 			for(edge_data e:ne)
@@ -99,7 +117,8 @@ public class Graph_Algo implements graph_algorithms{
 				if(w<gr.getNode(e.getDest()).getWeight())
 				{
 					gr.getNode(e.getDest()).setWeight(w);
-					gr.getNode(e.getDest()).setInfo(String.valueOf(gr.getNode(e.getSrc()).getKey()));// save parent on info for
+					gr.getNode(e.getDest()).setInfo(String.valueOf(gr.getNode(e.getSrc()).getKey()));// save parent on info for shortestPath
+					e.setTag(1);
 				}
 			}
 		}
@@ -109,8 +128,7 @@ public class Graph_Algo implements graph_algorithms{
 	/*
 	 * check if all graph visited or not
 	 */
-	public boolean visited(graph g)
-	{
+	public boolean visited(graph g) {
 		boolean ans=true;
 		for(node_data v:g.getV())
 		{
@@ -123,19 +141,18 @@ public class Graph_Algo implements graph_algorithms{
 	 * find node that not visited with min weight 
 	 * return key of node
 	 */
-	public int minW(graph g,int src)
-	{
-		int key=src;
+	public node_data minW(graph g,int src) {
+		node_data ver=g.getNode(src);
 		double minW=Double.POSITIVE_INFINITY;
 		for(node_data v:g.getV())
 		{
-			if(v.getTag()==0&&v.getWeight()<=minW)//check min and not visited
+			if(v.getTag()==0&&v.getWeight()<=minW)//check not visited and min weight
 			{
 				minW=v.getWeight();
-				key=v.getKey();
+				ver=v;
 			}
 		}
-		return key;
+		return ver;
 	}
 
 	@Override
@@ -153,6 +170,10 @@ public class Graph_Algo implements graph_algorithms{
 			key=x.getKey();
 			d=gr.getNode(key);
 		}
+//		for (int i = 0; i < sp.size(); i++) //loop for set tag edges
+//		{
+//			sp.get(i)
+//		}
 		return sp;
 	}
 
@@ -160,72 +181,14 @@ public class Graph_Algo implements graph_algorithms{
 	public List<node_data> TSP(List<Integer> targets) {
 		if(targets.size()==0)return null;
 		ArrayList<node_data>list=new ArrayList<node_data>();
-		ArrayList<node_data>list2=new ArrayList<node_data>();
 		for (int i = 0; i+1 < targets.size(); i++)
 		{
+			if(list.contains(this.gr.getNode(targets.get(i))) )
+			{
+				list.remove(this.gr.getNode(targets.get(i)));
+			}
 			list.addAll(shortestPath(targets.get(i), targets.get(i+1)));
 		}
-		
-		
-//		for (int i = 0; i+1 < targets.size(); i++)
-//		{
-//			list2= (ArrayList<node_data>) shortestPath(targets.get(i), targets.get(i+1));
-//			list.addAll(list2);
-			
-//			node_data v=gr.getNode(targets.get(i));
-//			edge_data e=gr.getEdge(targets.get(i), targets.get(i+1));
-//			if(v.getTag()==0&&e.getTag()==0)
-//			{
-//			list.addAll(shortestPath(targets.get(i), targets.get(i+1)));
-//			e.setTag(1);
-//			}
-//		}
-		
-		
-		
-		
-		
-		
-		
-		
-//		ArrayList<node_data> tar =new ArrayList<node_data>();
-//		clearG();
-//		for(node_data v:gr.getV())
-//		{
-//			for (int i = 0; i < targets.size(); i++) 
-//			{
-//				if(v.getKey()==targets.get(i)) 
-//				{
-//					v.setInfo("target");
-//					tar.add(v); // save the nodes we must pass
-//				}
-//			}
-//		}
-//		
-//		for (int i = 0; i+1 < targets.size(); i++) 
-//		{
-//			
-//			node_data s=gr.getNode(targets.get(i));
-//			node_data t=gr.getNode(targets.get(i+1));
-//			edge_data e=gr.getEdge(s.getKey(), t.getKey());
-//			e.setInfo("target");
-//			
-//			if(e.getInfo().equals("target"))
-//			{
-//			list.addAll(shortestPath(targets.get(i), targets.get(i+1)));
-//			e.setInfo("");
-//			}		
-//		}
-//		for(int i=0;i+1<tar.size();i++)
-//		{
-//			if(tar.get(i).getInfo().equals("target"))
-//			{
-//				list.addAll(shortestPath(tar.get(i).getKey(), (tar.get(i+1).getKey())));
-//				tar.get(i).setInfo("");
-//			}
-//			
-//		}
-
 		return list;
 	}
 
@@ -239,12 +202,7 @@ public class Graph_Algo implements graph_algorithms{
 			{
 				g.connect(e.getSrc(), e.getDest(), e.getWeight());
 			}
-			
 		}
-		
 		return g;
 	}
-
-
 }
-

@@ -35,6 +35,13 @@ public class NodeData implements node_data {
 		this.info="";
 		this.tag=0;
 	}
+	public NodeData (int key,Point3D p) {
+		this.key=key;
+		this.weight=Double.POSITIVE_INFINITY;
+		this.setLocation(p);
+		this.info="";
+		this.tag=0;
+	}
 	public NodeData copy() {
 		NodeData n=new NodeData(this.key,this.weight,this.location,this.info,this.tag);
 		return n;

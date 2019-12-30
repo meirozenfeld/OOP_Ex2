@@ -41,9 +41,11 @@ public class main {
 		g1.addNode(m3);
 		g1.addNode(m4);
 		g1.connect(8, 9, 1);
-		g1.connect(9, 10, 1);
+		g1.connect(9, 10, 0);
+		g1.connect(9, 11, 0);
 		g1.connect(10, 11, 1);
-//		g1.connect(8, 10, 1);
+		g1.connect(8, 11, 2);
+		g1.connect(11, 8, 1);
 		graph_algorithms gr1= new Graph_Algo();
 		gr1.init(g1);
 //		graph gr2=gr1.copy();
@@ -63,7 +65,7 @@ public class main {
 
 		ArrayList<Integer> targets=new ArrayList<Integer>();
 		targets.add(8);
-		targets.add(9);
+//		targets.add(9);
 		targets.add(11);
 		ArrayList<node_data> ts=(ArrayList<node_data>) gr1.TSP(targets);
 		for (int i = 0; i < ts.size(); i++)
