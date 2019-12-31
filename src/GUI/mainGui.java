@@ -29,6 +29,7 @@ public class mainGui {
 		g.connect(2, 3, 2);
 		g.connect(3, 4, 3);
 		g.connect(4, 5, 4);
+		g.connect(1, 5, 2);
 		//		g.connect(1, 5, 1000);
 		//		g.connect(5, 3, 1000);
 		graph_algorithms gr= new Graph_Algo();

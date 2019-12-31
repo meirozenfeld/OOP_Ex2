@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
+import javax.management.RuntimeErrorException;
 
 import dataStructure.graph;
 import dataStructure.node_data;
@@ -118,7 +119,7 @@ public class Graph_Algo implements graph_algorithms{
 				{
 					gr.getNode(e.getDest()).setWeight(w);
 					gr.getNode(e.getDest()).setInfo(String.valueOf(gr.getNode(e.getSrc()).getKey()));// save parent on info for shortestPath
-					e.setTag(1);
+//					e.setTag(1);
 				}
 			}
 		}
@@ -157,8 +158,13 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-		if(src==dest)return null;
 		ArrayList<node_data> sp=new ArrayList<node_data>();
+		if(src==dest) // end case to 1 vertex
+		{
+			sp.add(gr.getNode(src));
+			return sp;
+		}
+		
 		shortestPathDist(src,dest);	
 		sp.add(0,gr.getNode(dest));//add dest
 		int key=-1;
@@ -170,11 +176,13 @@ public class Graph_Algo implements graph_algorithms{
 			key=x.getKey();
 			d=gr.getNode(key);
 		}
-//		for (int i = 0; i < sp.size(); i++) //loop for set tag edges
-//		{
-//			sp.get(i)
-//		}
+		if(sp.size()==0)
+		{
+			throw new ArithmeticException("no path");
+		}
+		else {
 		return sp;
+		}
 	}
 
 	@Override
