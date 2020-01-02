@@ -1,9 +1,10 @@
 package dataStructure;
 import java.util.Collection;
 import java.util.Hashtable;
+import java.io.Serializable;
 
 
-public class DGraph implements graph{
+public class DGraph implements graph, Serializable{
 	private Hashtable  <Integer, node_data> Nodes;
 	private Hashtable <node_data,Hashtable<Integer, edge_data>> Edges; // hashtable into hashtable with Node key (and dest key)
 	private int edgeSize;

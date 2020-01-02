@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,7 +30,7 @@ import dataStructure.EdgeData;
  * @author 
  *
  */
-public class Graph_Algo implements graph_algorithms{
+public class Graph_Algo implements graph_algorithms, Serializable{
 
 	graph gr;
 	@Override
@@ -53,11 +54,12 @@ public class Graph_Algo implements graph_algorithms{
 			ObjectInputStream obj = new ObjectInputStream(file);
 			Graph_Algo g =  (Graph_Algo) obj.readObject();
 			this.gr =g.gr;
-		} catch (ClassNotFoundException e) {
+		}catch (RuntimeException | IOException e) {
 			e.printStackTrace();
-		} catch (RuntimeException | IOException e) {
+		} 
+		catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
+		} 
 
 	}
 
