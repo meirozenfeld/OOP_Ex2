@@ -32,7 +32,13 @@ import dataStructure.EdgeData;
  */
 public class Graph_Algo implements graph_algorithms, Serializable{
 
-	graph gr;
+	private graph gr;
+	public Graph_Algo() {
+		this.gr=new DGraph();
+	}
+	public Graph_Algo(graph _graph) {
+		this.gr=_graph;
+	}
 	@Override
 	public void init(graph g) {
 		this.gr=g;
@@ -80,6 +86,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	public boolean isConnected() {
 		int counter=0;
 		int n=gr.nodeSize();
+		if (n==0)return true; // end case
 		clearG(); // reset graph 
 		Iterator<node_data> N= this.gr.getV().iterator(); // iterator to this.gr nodes
 		if(n==1)return true; // end case
@@ -121,7 +128,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 				{
 					gr.getNode(e.getDest()).setWeight(w);
 					gr.getNode(e.getDest()).setInfo(String.valueOf(gr.getNode(e.getSrc()).getKey()));// save parent on info for shortestPath
-//					e.setTag(1);
+					//					e.setTag(1);
 				}
 			}
 		}
@@ -166,7 +173,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			sp.add(gr.getNode(src));
 			return sp;
 		}
-		
+
 		shortestPathDist(src,dest);	
 		sp.add(0,gr.getNode(dest));//add dest
 		int key=-1;
@@ -183,7 +190,7 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			throw new ArithmeticException("no path");
 		}
 		else {
-		return sp;
+			return sp;
 		}
 	}
 
@@ -191,6 +198,11 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 	public List<node_data> TSP(List<Integer> targets) {
 		if(targets.size()==0)return null;
 		ArrayList<node_data>list=new ArrayList<node_data>();
+		if(targets.size()==1)
+		{
+			list.add(this.gr.getNode(targets.get(0)));
+			return list;
+		}
 		for (int i = 0; i+1 < targets.size(); i++)
 		{
 			if(list.contains(this.gr.getNode(targets.get(i))) )

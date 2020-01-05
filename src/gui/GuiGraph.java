@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.FlowLayout;
@@ -25,17 +25,17 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 
-public class Window extends JFrame implements ActionListener, MouseListener, Serializable
+public class GuiGraph extends JFrame implements ActionListener, MouseListener, Serializable
 {
 	LinkedList<Point3D> points = new LinkedList<Point3D>();
 	ArrayList<node_data> sp = new ArrayList<node_data>(); // for shortestPath
-	graph gr;
+	private graph gr;
 	private static JFrame frame;
-	public Window()
+	public GuiGraph()
 	{
 		initGUI();
 	}
-	public Window(graph g) {
+	public GuiGraph(graph g) {
 		this.gr=g;
 		initGUI();
 	}
@@ -123,7 +123,7 @@ public class Window extends JFrame implements ActionListener, MouseListener, Ser
 		case "save":
 			graph_algorithms gSave=new Graph_Algo();
 			gSave.init(this.gr);
-			FileDialog sa=new FileDialog(Window.frame,"save .txt",FileDialog.SAVE);
+			FileDialog sa=new FileDialog(GuiGraph.frame,"save .txt",FileDialog.SAVE);
 			sa.setVisible(true);
 			String file=null;
 			file=sa.getFile();

@@ -1,14 +1,13 @@
-package test;
+package Tests;
 import algorithms.*;
 import dataStructure.*;
+import gui.GuiGraph;
 import utils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
-
-import GUI.Window;
 
 class Graph_AlgoTest {
 

@@ -38,10 +38,14 @@ public class DGraph implements graph, Serializable{
 
 	@Override
 	public void connect(int src, int dest, double w) {
-		edge_data e=new EdgeData(src,dest,w);	
+		try {
+		edge_data e=new EdgeData(src,dest,w);
 		Edges.get(Nodes.get(src)).put(dest, e);
 		edgeSize++;
 		this.mc++;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 
